@@ -116,6 +116,7 @@ var press = false;
 var socket = io.connect();
 var m_array = [];
 
+
 $(document).mousedown( function() { 
   press = true; 
 });
@@ -146,7 +147,19 @@ $( "#resetBtn" ).click(function() {
   }
       
   m_array = [0, 0, 0, 0, 0, 0, 0, 0];
-  send2Server();
+  //send2Server();
+});
+
+socket.on('occupied',function(data){
+  $("#d57").html		
+  if (data.val >= 50) {
+    $("#d57").css("background-color", "yellow");
+    $("#d57").html("1");
+  } else {
+    console.log('one');
+    $("#d57").css("background-color", "#e2e2e0");
+    $("#d57").html("0");
+  }	
 });
 
 function toggleDot(me) {
