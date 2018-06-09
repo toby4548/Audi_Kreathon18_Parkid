@@ -1,0 +1,25 @@
+{
+  "name": "audi_kreathon18_parkid",
+  "version": "1.0.0",
+  "description": "dependecies for the project parkid",
+  "main": "park.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toby4548/Audi_Kreathon18_Parkid.git"
+  },
+  "author": "Tony Huang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/toby4548/Audi_Kreathon18_Parkid/issues"
+  },
+  "homepage": "https://github.com/toby4548/Audi_Kreathon18_Parkid#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "johnny-five": "^0.15.0",
+    "serialport": "^4.0.7",
+    "socket.io": "^2.1.1"
+  }
+}

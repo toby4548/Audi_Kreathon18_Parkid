@@ -1,0 +1,207 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Parkid</title>
+  <style type="text/css">
+    #matrixTB {
+      cursor: pointer;
+      width: 200px;
+      height: 200px;
+      border-width: 0;
+      border-spacing: 0;
+    }
+
+    #matrixTB td {
+      padding: 0;
+      height: 10px;
+      width: 10px;
+      background-color: #e2e2e0;
+      border: 1px solid #cccccc;
+      text-align: center;
+    }
+
+    .active {
+      background-color: #F11444;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Parkplatz</h2>
+  <table id="matrixTB">
+    <tr>
+      <td id="d1">0</td>
+      <td id="d2">0</td>
+      <td id="d3">0</td>
+      <td id="d4">0</td>
+      <td id="d5">0</td>
+      <td id="d6">0</td>
+      <td id="d7">0</td>
+      <td id="d8">0</td>
+    </tr>
+    <tr>
+      <td id="d9">0</td>
+      <td id="d10">0</td>
+      <td id="d11">0</td>
+      <td id="d12">0</td>
+      <td id="d13">0</td>
+      <td id="d14">0</td>
+      <td id="d15">0</td>
+      <td id="d16">0</td>
+    </tr>
+    <tr>
+      <td id="d17">0</td>
+      <td id="d18">0</td>
+      <td id="d19">0</td>
+      <td id="d20">0</td>
+      <td id="d21">0</td>
+      <td id="d22">0</td>
+      <td id="d23">0</td>
+      <td id="d24">0</td>
+    </tr>
+    <tr>
+      <td id="d25">0</td>
+      <td id="d26">0</td>
+      <td id="d27">0</td>
+      <td id="d28">0</td>
+      <td id="d29">0</td>
+      <td id="d30">0</td>
+      <td id="d31">0</td>
+      <td id="d32">0</td>
+    </tr>
+    <tr>
+      <td id="d33">0</td>
+      <td id="d34">0</td>
+      <td id="d35">0</td>
+      <td id="d36">0</td>
+      <td id="d37">0</td>
+      <td id="d38">0</td>
+      <td id="d39">0</td>
+      <td id="d40">0</td>
+    </tr>
+    <tr>
+      <td id="d41">0</td>
+      <td id="d42">0</td>
+      <td id="d43">0</td>
+      <td id="d44">0</td>
+      <td id="d45">0</td>
+      <td id="d46">0</td>
+      <td id="d47">0</td>
+      <td id="d48">0</td>
+    </tr>
+    <tr>
+      <td id="d49">0</td>
+      <td id="d50">0</td>
+      <td id="d51">0</td>
+      <td id="d52">0</td>
+      <td id="d53">0</td>
+      <td id="d54">0</td>
+      <td id="d55">0</td>
+      <td id="d56">0</td>
+    </tr>
+    <tr>
+      <td id="d57">0</td>
+      <td id="d58">0</td>
+      <td id="d59">0</td>
+      <td id="d60">0</td>
+      <td id="d61">0</td>
+      <td id="d62">0</td>
+      <td id="d63">0</td>
+      <td id="d64">0</td>
+    </tr>
+  </table>
+  <p>
+    <input type="button" value="Reset" id="resetBtn" />
+  </p>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script>
+    var press = false;
+    var socket = io.connect();
+    var m_array = [];
+
+
+    $(document).mousedown(function () {
+      press = true;
+    });
+    $(document).mouseup(function () {
+      press = false;
+
+      matrixVal();
+    });
+
+    $('td').mousedown(function (e) {
+      toggleDot($(this));
+      e.preventDefault();
+    });
+
+    $('td').mouseover(function (e) {
+      if (press) {
+        toggleDot($(this));
+        e.preventDefault();
+      }
+    });
+
+    $("#resetBtn").click(function () {
+      var index = 0;
+
+      for (var i = 1; i < 65; i++) {
+        $("#d" + i).html('0');
+        $("#d" + i).css("background-color", "#e2e2e0");
+      }
+
+      m_array = [0, 0, 0, 0, 0, 0, 0, 0];
+      //send2Server();
+    });
+
+    socket.on('occupied', function (data) {
+      console.log(data.val);
+      $("#d57").html
+      if (data.val == 1) {
+        $("#d57").css("background-color", "yellow");
+        $("#d57").html("1");
+      } else {
+        console.log('one');
+        $("#d57").css("background-color", "#e2e2e0");
+        $("#d57").html("0");
+      }
+    });
+
+    function toggleDot(me) {
+      if (me.html() == '0') {
+        me.css("background-color", "yellow");
+        me.html("1");
+      } else {
+        console.log('one');
+        me.css("background-color", "#e2e2e0");
+        me.html("0");
+      }
+    }
+
+    function matrixVal() {
+      var data = '';
+      m_array = [];
+
+      for (var i = 1; i < 65; i++) {
+        data += $("#d" + i).html();
+
+        if ((i % 8) == 0) {
+          m_array.push(data);
+          data = '';
+        }
+      }
+
+      send2Server();
+    }
+
+    function send2Server() {
+      socket.emit('live_matrix', {
+        'm': m_array
+      });
+    }
+  </script>
+</body>
+
+</html>
