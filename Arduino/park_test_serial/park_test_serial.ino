@@ -43,26 +43,49 @@ void loop() {
   digitalWrite(trigger2, HIGH);
   delay(10);
   digitalWrite(trigger2, LOW);
-  dauer1 = pulseIn(echo2, HIGH);
+  dauer2 = pulseIn(echo2, HIGH);
   entfernung2 = (dauer2 / 2) * 0.03432;
 
   DynamicJsonBuffer jsonBuffer; //----- PROBLEM LINE -----//
   JsonObject& root = jsonBuffer.createObject();
 
   int carID = 1;
-  int occupied = 0;
+  int occupied_1 = 0;
+  int occupied_2 = 0;
 
-  if (entfernung1 <= 100) {
-    occupied = 1;
-    root["carID"] = carID;
-    root["occupied"] = occupied;
+  root["carID"] = carID;
+  root["occupied_1"] = occupied_1;
+  root["occupied_2"] = occupied_2;  
+
+  
+  if ((entfernung1 <= 100)&&(entfernung2 <= 100)) {
+    occupied_1 = 1;
+    occupied_2 = 1;
+    root["occupied_1"] = occupied_1;
+    root["occupied_2"] = occupied_2;
     root.printTo(Serial);
     //root.prettyPrintTo(Serial);
     Serial.println();
-  } else {
-    occupied = 0;
-    root["carID"] = carID;
-    root["occupied"] = occupied;
+  } 
+  else if (entfernung2 <= 100) {
+    occupied_2 = 1;
+    root["occupied_2"] = occupied_2;
+    root.printTo(Serial);
+    //root.prettyPrintTo(Serial);
+    Serial.println();
+  }
+  else if (entfernung1 <= 100) {
+    occupied_1 = 1;
+    root["occupied_1"] = occupied_1;
+    root.printTo(Serial);
+    //root.prettyPrintTo(Serial);
+    Serial.println();  
+  }
+  else {
+    occupied_1 = 0;
+    occupied_2 = 0;
+    root["occupied_1"] = occupied_1;
+    root["occupied_2"] = occupied_2;
     root.printTo(Serial);
     //root.prettyPrintTo(Serial);
     Serial.println();

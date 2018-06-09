@@ -32,15 +32,17 @@ serialPort.on("open", function() {
 
 /* Open SocketIO */
 serverIO.on("connection", function(socket) {
-  var occupied = 0;
+  var occupied_1 = 0;
+  var occupied_2 = 0;
 
   serialPort.on("data", function(d) {
     //console.log("Data from Arduino:" + d);
 
     /* parse json */
     var obj = JSON.parse(d);
-    occupied = Number(obj.occupied);
-
+    occupied_1 = Number(obj.occupied_1);
+    occupied_2 = Number(obj.occupied_2);
+    var occupied = [occupied_1, occupied_2];
     //console.log(besetzt);
 
     serverIO.sockets.emit("occupied", { val: occupied });
