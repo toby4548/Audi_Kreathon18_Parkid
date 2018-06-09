@@ -2,12 +2,22 @@ var io = require("socket.io");
 var express = require("express");
 var serveStatic = require("serve-static");
 
-var five = require("johnny-five");
-var board = new five.Board();
+// Import Serialport package
 
+var SerialPort = require("serialport");
+var serialPort = new SerialPort("COM5", {
+  baudRate: 9600,
+  parser: SerialPort.parsers.readline("\n")
+});
+
+
+//var five = require("johnny-five");
+//var board = new five.Board();
+
+// Build static webpage with express
 var app = express();
 
-app.use(express.static("matrix"));
+app.use(express.static("park"));
 app.use(function(req, res) {
   res.statusCode = 404;
   res.end("<h1>ERROR!</h1>");
@@ -17,6 +27,7 @@ var server = app.listen(5438, function() {
   console.log("server running at 5438 port.");
 });
 
+// Import socketio
 var serverIO = io(server);
 
 var matrix;
@@ -24,15 +35,9 @@ var new_value = 0;
 
 serverIO.on("connection", function(socket) {
   serverIO.emit("occupied", { val: new_value });
-  /*
-  socket.on('live_matrix', function(data) {
-    if (matrix != null) {
-      matrix.draw(data.m);
-    }
-  });
-*/
 });
 
+/*
 board.on("ready", function() {
   matrix = new five.Led.Matrix({
     pins: {
@@ -56,3 +61,28 @@ board.on("ready", function() {
     oldVal = newVal;
   });
 });
+*/
+
+// Get Data from Arduino via serialport
+
+var obj;
+var besetzt = 0;
+serialPort.on("open", function() {
+  console.log("Serial Connected!");
+
+  serialPort.on("data", function(d) {
+    
+    console.log("Data from Arduino:" + d);
+    obj = JSON.parse(d);
+    besetzt = Number(obj.besetzt);
+    console.log(besetzt);
+    serverIO.sockets.emit("occupied", { val: besetzt });
+    
+    const parser = usbport.pipe(new Readline()); 
+    parser.on('data', console.log);
+  });
+});
+
+
+// interprete this data
+
