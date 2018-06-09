@@ -49,15 +49,30 @@ void loop() {
   DynamicJsonBuffer jsonBuffer; //----- PROBLEM LINE -----//
   JsonObject& root = jsonBuffer.createObject();
 
-  int carID = 1;
+  String carID = "FF FF FF FF";
   int occupied_1 = 0;
   int occupied_2 = 0;
 
   root["carID"] = carID;
-  root["occupied_1"] = occupied_1;
-  root["occupied_2"] = occupied_2;  
+  //root["occupied_1"] = occupied_1;
+  //root["occupied_2"] = occupied_2;  
 
+  int occupied_value[64] = {};
   
+  JsonArray& occupied = root.createNestedArray("occupied");
+
+  for (int i = 0; i <64; i++) {
+    occupied.add(occupied_value[i]);
+  }
+
+  int check = 0;
+  root["check"] = check; 
+
+  root.printTo(Serial);
+  //root.prettyPrintTo(Serial);
+  Serial.println();
+
+  /*
   if ((entfernung1 <= 100)&&(entfernung2 <= 100)) {
     occupied_1 = 1;
     occupied_2 = 1;
@@ -90,6 +105,8 @@ void loop() {
     //root.prettyPrintTo(Serial);
     Serial.println();
   }
+
+  */
 
   // Versetzt die gelesene Karte in einen Ruhemodus, um nach anderen Karten suchen zu können.
   // mfrc522.PICC_HaltA();
