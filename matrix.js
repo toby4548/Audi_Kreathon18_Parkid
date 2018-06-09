@@ -24,13 +24,6 @@ var new_value = 0;
 
 serverIO.on("connection", function(socket) {
   serverIO.emit("occupied", { val: new_value });
-  /*
-  socket.on('live_matrix', function(data) {
-    if (matrix != null) {
-      matrix.draw(data.m);
-    }
-  });
-*/
 });
 
 board.on("ready", function() {
