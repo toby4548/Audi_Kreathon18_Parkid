@@ -14,6 +14,7 @@ long entfernung1 = 0;
 long dauer2 = 0;
 long entfernung2 = 0;
 String P = "Parkplatz 1"; //Name Ultraschallsensor
+bool park_block_state = false;
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);   // Instanz des MFRC522 erzeugen
 
@@ -65,12 +66,55 @@ void loop() {
     occupied.add(occupied_value[i]);
   }
 
-  int check = 0;
-  root["check"] = check; 
+
+  /////////////////The correct flow(Demo v4)////////////////////
+
+  root["check"] = 0; 
+
+  root["check_car"] = 0;
+  
+  root.printTo(Serial);
+  //root.prettyPrintTo(Serial);
+  Serial.println();
+
+  delay(5000);
+
+  root["check_car"] = 1;
+  root["carID"] = "1A 2B 3C 4D";
 
   root.printTo(Serial);
   //root.prettyPrintTo(Serial);
   Serial.println();
+
+  delay(5000);
+
+  root["check"] = 1;
+  
+  int set_value = 1; 
+  occupied.set(56,set_value);
+
+  
+
+  root.printTo(Serial);
+  //root.prettyPrintTo(Serial);
+  Serial.println();
+
+  delay(5000);
+
+  root["check_car"] = 0;
+  root["check"] = 0;
+
+  root.printTo(Serial);
+  //root.prettyPrintTo(Serial);
+  Serial.println();
+
+  delay(5000);
+
+
+
+
+
+  
 
   /*
   if ((entfernung1 <= 100)&&(entfernung2 <= 100)) {
@@ -110,5 +154,5 @@ void loop() {
 
   // Versetzt die gelesene Karte in einen Ruhemodus, um nach anderen Karten suchen zu können.
   // mfrc522.PICC_HaltA();
-  delay(1000);
+
 }

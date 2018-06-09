@@ -24,27 +24,128 @@ var server = app.listen(5438, function() {
 var serverIO = io(server);
 
 var matrix;
+const parkspace_to_grid = {
+  1: 56,
+  2: 57,
+  3: 58,
+  4: 59,
+  5: 55,
+  6: 47,
+  7: 39,
+  8: 31,
+  9: 23,
+  10: 32,
+  11: 33,
+  12: 34,
+  13: 35,
+  14: 0,
+  15: 3
+};
 
 /* Open serial port ****Remember to do this before open socketio***** */
 serialPort.on("open", function() {
   console.log("Serial Connected!");
 });
 
+var mem = [];
+
 /* Open SocketIO */
 serverIO.on("connection", function(socket) {
-  var occupied_1 = 0;
-  var occupied_2 = 0;
-
   serialPort.on("data", function(d) {
-    //console.log("Data from Arduino:" + d);
-
     /* parse json */
     var obj = JSON.parse(d);
-    occupied_1 = Number(obj.occupied_1);
-    occupied_2 = Number(obj.occupied_2);
-    var occupied = [occupied_1, occupied_2];
-    //console.log(besetzt);
+    //console.log((obj["occupied"][56]));
 
-    serverIO.sockets.emit("occupied", { val: occupied });
+    /* get keys */
+    var carID = obj["carID"];
+    var occupied = obj["occupied"];
+    var check = obj["check"];
+    var check_car = obj["check_car"];
+
+    var state;
+
+    if (check_car == 1) {
+      if (check == 1) state = 2;
+      else state = 1;
+    } else state = 0;
+
+    switch (state) {
+      case 0:
+        console.log("Waiting...");
+        break;
+
+      case 1:
+        console.log("Start parking process");
+        if (carID == "FF FF FF FF") {
+          console.log("Wrong carID...");
+          ////////////Todo: set the check_car back to 0//////////
+        } else {
+          console.log("Assigining parkingspace...");
+
+          /* get assign */
+          var assign = get_assign(carID, occupied);
+          if (assign.length > 0) {
+            mem = assign;
+            console.log("Please park on parkplace No." + String(assign));
+            /* Wait for check change to 1 from Arduino */
+            break;
+          } else {
+            console.log("There is no parkingspace available.");
+            ////////////Todo: set the check_car back to 0////////////////
+            break;
+          }
+        }
+
+      case 2:
+        console.log("Finish parking...checking validity...");
+        var valid = false;
+        //console.log(mem);
+        var after_parking = check_availability(
+          mem,
+          occupied,
+          parkspace_to_grid
+        );
+        //console.log(mem);
+        //console.log(after_parking);
+        if (mem.length > after_parking.length) {
+          valid = true;
+          console.log("You are correctly parked!");
+          mem = [];
+          /////////Todo: set the check_car back to 0///////////
+          break;
+        } else {
+          valid = false;
+          console.log("You parked at wrong place! Please park again.");
+          mem = [];
+          ///////////Todo: set the check back to 0/////////////
+          break;
+        }
+    }
+
+    /////////////Todo: emit UI to browser ////////////////
+    //serverIO.sockets.emit("occupied", { val: occupied });
   });
 });
+
+function get_assign(carID, occupied) {
+  let random_number = Math.random();
+  let assign = [];
+
+  /* Random decide */
+  //if (random_number > 0.5) assign = [1];
+  //else assign = [2];
+  assign = [1];
+
+  assign = check_availability(assign, occupied, parkspace_to_grid);
+  return assign;
+}
+
+function check_availability(assign, occupied, parkspace_to_grid) {
+  var copy_assign = assign.slice(0);
+  for (let i = 0; i < copy_assign.length; i++) {
+    let assign_on_grid = parkspace_to_grid[String(copy_assign[i])];
+    //console.log(occupied);
+    if (occupied[String(assign_on_grid)] == 1) copy_assign.splice(i, 1);
+  }
+  return copy_assign;
+}

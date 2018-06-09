@@ -13,3 +13,21 @@ Arduino: park_test_serial
 ## Demo v3 - 2 parkspace detected with Serialport:
 
 Arduino: park_test_serial
+
+## Demo v4 - Workflow demo without interface
+
+Arduino: park_test_serial
+Format:
+
+```json
+{
+  "carID": "FF FF FF FF",
+  "occupied": [
+    0,
+    ......,
+    0
+  ],
+  "check": 0,
+  "check_car": 0
+}
+```
