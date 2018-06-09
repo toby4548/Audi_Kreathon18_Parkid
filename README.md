@@ -2,6 +2,8 @@
 
 The source code for team Parkid at Audi Kreathon 2018
 
+![parkid](img/parkid.PNG)
+
 ## Demo v1 - 1 parkspace detected with Johnny-five:
 
 Arduino: standart Firmata
