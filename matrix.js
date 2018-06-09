@@ -20,13 +20,17 @@ var server = app.listen(5438, function() {
 var serverIO = io(server);
 
 var matrix;
+var new_value = 0;
 
 serverIO.on("connection", function(socket) {
-  socket.on("live_matrix", function(data) {
+  serverIO.emit("occupied", { val: new_value });
+  /*
+  socket.on('live_matrix', function(data) {
     if (matrix != null) {
       matrix.draw(data.m);
     }
   });
+*/
 });
 
 board.on("ready", function() {
@@ -39,4 +43,16 @@ board.on("ready", function() {
   });
 
   matrix.on();
+
+  var cds = new five.Sensor("A0");
+  var oldVal = 0;
+
+  cds.scale([0, 100]).on("change", function() {
+    newVal = Math.floor(this.value);
+
+    if (newVal != oldVal) {
+      serverIO.sockets.emit("occupied", { val: newVal }); // 傳出即時感測資料
+    }
+    oldVal = newVal;
+  });
 });
