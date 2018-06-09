@@ -10,6 +10,6 @@ Arduino: standart Firmata
 
 Arduino: park_test_serial
 
-## Demo v3 - 2 parkspace
+## Demo v3 - 2 parkspace detected with Serialport:
 
 Arduino: park_test_serial
