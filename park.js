@@ -52,52 +52,60 @@ var mem = [];
 /* Open SocketIO */
 serverIO.on("connection", function(socket) {
   serialPort.on("data", function(d) {
+    var instruction = [];
     /* parse json */
     var obj = JSON.parse(d);
     //console.log((obj["occupied"][56]));
 
     /* get keys */
     var carID = obj["carID"];
-    var occupied = obj["occupied"];
+    var occupied = obj["occupied"]; //occupaied is an 1 by 64 matrix
     var check = obj["check"];
     var check_car = obj["check_car"];
 
+    /* Implement workflow with finite state machine*/
     var state;
-
+    /* state 0: waiting, state 1: parking, state 2: validation */
     if (check_car == 1) {
       if (check == 1) state = 2;
       else state = 1;
     } else state = 0;
 
     switch (state) {
-      case 0:
-        console.log("Waiting...");
+      case 0: // state 0
+        //console.log("Waiting...");
+        instruction.push("Waiting...");
         break;
 
-      case 1:
-        console.log("Start parking process");
+      case 1: // state 1
+        //console.log("Start parking process...");
+        instruction.push("Start parking process...");
         if (carID == "FF FF FF FF") {
-          console.log("Wrong carID...");
+          //console.log("carID is not valid...");
+          instruction.push("carID is not valid...");
           ////////////Todo: set the check_car back to 0//////////
         } else {
-          console.log("Assigining parkingspace...");
-
+          //console.log("Assigining parkingspace...");
+          instruction.push("Assigining parkingspace...");
           /* get assign */
           var assign = get_assign(carID, occupied);
           if (assign.length > 0) {
             mem = assign;
-            console.log("Please park on parkplace No." + String(assign));
+            //console.log("Please park on parkplace No." + String(assign));
+            instruction.push("Please park on parkplace No." + String(assign));
             /* Wait for check change to 1 from Arduino */
             break;
           } else {
-            console.log("There is no parkingspace available.");
+            //console.log("There is no parkingspace available.");
+            instruction.push("There is no parkingspace available.");
             ////////////Todo: set the check_car back to 0////////////////
             break;
           }
         }
 
-      case 2:
-        console.log("Finish parking...checking validity...");
+      case 2: // state 2
+        //console.log("Finish parking... \n Checking validity...");
+        instruction.push("Finish parking... \n Checking validity...");
         var valid = false;
         //console.log(mem);
         var after_parking = check_availability(
@@ -109,13 +117,15 @@ serverIO.on("connection", function(socket) {
         //console.log(after_parking);
         if (mem.length > after_parking.length) {
           valid = true;
-          console.log("You are correctly parked!");
+          //console.log("You are correctly parked!");
+          instruction.push("You are correctly parked!");
           mem = [];
           /////////Todo: set the check_car back to 0///////////
           break;
         } else {
           valid = false;
-          console.log("You parked at wrong place! Please park again.");
+          //console.log("You parked at wrong place! \n Please park again.");
+          instruction.push("You parked at wrong place! \n Please park again.");
           mem = [];
           ///////////Todo: set the check back to 0/////////////
           break;
@@ -123,7 +133,10 @@ serverIO.on("connection", function(socket) {
     }
 
     /////////////Todo: emit UI to browser ////////////////
-    //serverIO.sockets.emit("occupied", { val: occupied });
+    serverIO.sockets.emit("park", {
+      occupied: occupied,
+      instruction: instruction
+    });
   });
 });
 

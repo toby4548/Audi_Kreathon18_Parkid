@@ -3,8 +3,12 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Parkid</title>
+  <title>Parkid Demo</title>
   <style type="text/css">
+    head {
+      text-align: center;
+    }
+
     #matrixTB {
       cursor: pointer;
       width: 200px;
@@ -22,100 +26,156 @@
       text-align: center;
     }
 
+
+
     .active {
       background-color: #F11444;
+    }
+
+    .column {
+      float: left;
+      width: 50%;
+    }
+
+    /* Clear floats after the columns */
+
+    .row {
+      height: 1500;
+    }
+
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    .header {
+      background: #fff;
+    }
+
+    body {
+      background-image: url(/img/audi_r8.png);
+      background-repeat: no-repeat;
+      background-size: 100% 165%;
+
+    }
+
+    h2 {
+      font: normal normal normal 32px/1 Helvetica, arial, sans-serif;
+      border-bottom: 2px solid #fff;
+      background: #fff;
+      color: #000;
+
+      display: inline-block;
+
     }
   </style>
 </head>
 
 <body>
-  <h2>Parkid</h2>
-  <img src="/img/audi.jpg" alt="Audi" height="100" width="200">
-  <table id="matrixTB">
-    <tr>
-      <td id="d1">0</td>
-      <td id="d2">0</td>
-      <td id="d3">0</td>
-      <td id="d4">0</td>
-      <td id="d5">0</td>
-      <td id="d6">0</td>
-      <td id="d7">0</td>
-      <td id="d8">0</td>
-    </tr>
-    <tr>
-      <td id="d9">0</td>
-      <td id="d10">0</td>
-      <td id="d11">0</td>
-      <td id="d12">0</td>
-      <td id="d13">0</td>
-      <td id="d14">0</td>
-      <td id="d15">0</td>
-      <td id="d16">0</td>
-    </tr>
-    <tr>
-      <td id="d17">0</td>
-      <td id="d18">0</td>
-      <td id="d19">0</td>
-      <td id="d20">0</td>
-      <td id="d21">0</td>
-      <td id="d22">0</td>
-      <td id="d23">0</td>
-      <td id="d24">0</td>
-    </tr>
-    <tr>
-      <td id="d25">0</td>
-      <td id="d26">0</td>
-      <td id="d27">0</td>
-      <td id="d28">0</td>
-      <td id="d29">0</td>
-      <td id="d30">0</td>
-      <td id="d31">0</td>
-      <td id="d32">0</td>
-    </tr>
-    <tr>
-      <td id="d33">0</td>
-      <td id="d34">0</td>
-      <td id="d35">0</td>
-      <td id="d36">0</td>
-      <td id="d37">0</td>
-      <td id="d38">0</td>
-      <td id="d39">0</td>
-      <td id="d40">0</td>
-    </tr>
-    <tr>
-      <td id="d41">0</td>
-      <td id="d42">0</td>
-      <td id="d43">0</td>
-      <td id="d44">0</td>
-      <td id="d45">0</td>
-      <td id="d46">0</td>
-      <td id="d47">0</td>
-      <td id="d48">0</td>
-    </tr>
-    <tr>
-      <td id="d49">0</td>
-      <td id="d50">0</td>
-      <td id="d51">0</td>
-      <td id="d52">0</td>
-      <td id="d53">0</td>
-      <td id="d54">0</td>
-      <td id="d55">0</td>
-      <td id="d56">0</td>
-    </tr>
-    <tr>
-      <td id="d57">0</td>
-      <td id="d58">0</td>
-      <td id="d59">0</td>
-      <td id="d60">0</td>
-      <td id="d61">0</td>
-      <td id="d62">0</td>
-      <td id="d63">0</td>
-      <td id="d64">0</td>
-    </tr>
-  </table>
-  <p>
+  <div class="header">
+    <center>
+      <h2>Parkid Demo</h2>
+    </center>
+  </div>
+  <div class="row">
+    <div class="column">
+      <table id="matrixTB" align="center" width="400" hight="400">
+        <tr>
+          <td id="d1">0</td>
+          <td id="d2">0</td>
+          <td id="d3">0</td>
+          <td id="d4">0</td>
+          <td id="d5">0</td>
+          <td id="d6">0</td>
+          <td id="d7">0</td>
+          <td id="d8">0</td>
+        </tr>
+        <tr>
+          <td id="d9">0</td>
+          <td id="d10">0</td>
+          <td id="d11">0</td>
+          <td id="d12">0</td>
+          <td id="d13">0</td>
+          <td id="d14">0</td>
+          <td id="d15">0</td>
+          <td id="d16">0</td>
+        </tr>
+        <tr>
+          <td id="d17">0</td>
+          <td id="d18">0</td>
+          <td id="d19">0</td>
+          <td id="d20">0</td>
+          <td id="d21">0</td>
+          <td id="d22">0</td>
+          <td id="d23">0</td>
+          <td id="d24">0</td>
+        </tr>
+        <tr>
+          <td id="d25">0</td>
+          <td id="d26">0</td>
+          <td id="d27">0</td>
+          <td id="d28">0</td>
+          <td id="d29">0</td>
+          <td id="d30">0</td>
+          <td id="d31">0</td>
+          <td id="d32">0</td>
+        </tr>
+        <tr>
+          <td id="d33">0</td>
+          <td id="d34">0</td>
+          <td id="d35">0</td>
+          <td id="d36">0</td>
+          <td id="d37">0</td>
+          <td id="d38">0</td>
+          <td id="d39">0</td>
+          <td id="d40">0</td>
+        </tr>
+        <tr>
+          <td id="d41">0</td>
+          <td id="d42">0</td>
+          <td id="d43">0</td>
+          <td id="d44">0</td>
+          <td id="d45">0</td>
+          <td id="d46">0</td>
+          <td id="d47">0</td>
+          <td id="d48">0</td>
+        </tr>
+        <tr>
+          <td id="d49">0</td>
+          <td id="d50">0</td>
+          <td id="d51">0</td>
+          <td id="d52">0</td>
+          <td id="d53">0</td>
+          <td id="d54">0</td>
+          <td id="d55">0</td>
+          <td id="d56">0</td>
+        </tr>
+        <tr>
+          <td id="d57">0</td>
+          <td id="d58">0</td>
+          <td id="d59">0</td>
+          <td id="d60">0</td>
+          <td id="d61">0</td>
+          <td id="d62">0</td>
+          <td id="d63">0</td>
+          <td id="d64">0</td>
+        </tr>
+      </table>
+    </div>
+    <div class="column">
+      <!--
+      <img src="/img/audi.jpg" alt="Audi" align="top" height="80" width="200">
+      -->
+      <p id="i01">Welcome to AAZ!</p>
+    </div>
+  </div>
+
+  <!--
+  <p align="left">
     <input type="button" value="Reset" id="resetBtn" />
   </p>
+  -->
   <script src="/socket.io/socket.io.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
   <script>
@@ -157,37 +217,33 @@
       //send2Server();
     });
 
-    socket.on('occupied', function (data) {
-      console.log(data.val);
+    socket.on('park', function (data) {
+      var value = data["occupied"][56];
+      var ins = data["instruction"];
+      var show_instruction = "";
+      console.log(value);
       //$("#d57").html
       for (var i = 1; i < 65; i++) {
         $("#d" + i).html('0');
         $("#d" + i).css("background-color", "#e2e2e0");
       }
-      if ((data.val[0] == 1) && (data.val[1] == 1)) {
+      if (value == 1) {
         $("#d57").css("background-color", "yellow");
         $("#d57").html("1");
-        $("#d58").css("background-color", "yellow");
-        $("#d58").html("1");
-      }
-      else if (data.val[0] == 1) {
-        $("#d57").css("background-color", "yellow");
-        $("#d57").html("1");
-        $("#d58").css("background-color", "#e2e2e0");
-        $("#d58").html("0");
-      }
-      else if (data.val[1] == 1) {
-        $("#d57").css("background-color", "#e2e2e0");
-        $("#d57").html("0");
-        $("#d58").css("background-color", "yellow");
-        $("#d58").html("1");
       }
       else {
         $("#d57").css("background-color", "#e2e2e0");
         $("#d57").html("0");
-        $("#d58").css("background-color", "#e2e2e0");
-        $("#d58").html("0");
       }
+
+      for (let i = 0; i < ins.length; i++) {
+        show_instruction += (ins[i] + "\n");
+      }
+
+      show_instruction = show_instruction.replace(/\n/g, "<br />");
+
+      $("#i01").html(show_instruction);
+
     });
 
     function toggleDot(me) {
