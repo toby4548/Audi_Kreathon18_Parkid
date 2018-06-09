@@ -5,10 +5,14 @@
 #define RST_PIN   9     // SPI Reset Pin
 #define SS_PIN    10    // SPI Slave Select Pin
 
-int trigger = 7;
-int echo = 6;
-long dauer = 0;
-long entfernung = 0;
+int trigger1 = 7;
+int echo1 = 6;
+int trigger2 = 5;
+int echo2 = 4;
+long dauer1 = 0;
+long entfernung1 = 0;
+long dauer2 = 0;
+long entfernung2 = 0;
 String P = "Parkplatz 1"; //Name Ultraschallsensor
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);   // Instanz des MFRC522 erzeugen
@@ -18,21 +22,29 @@ void setup() {
   Serial.begin(9600);  // Serielle Kommunikation mit dem PC initialisieren
   SPI.begin();         // Initialisiere SPI Kommunikation
   mfrc522.PCD_Init();  // Initialisiere MFRC522 Lesemodul
-  pinMode(trigger, OUTPUT);
-  pinMode(echo, INPUT);
-
-
+  pinMode(trigger1, OUTPUT);
+  pinMode(echo1, INPUT);
+  pinMode(trigger2, OUTPUT);
+  pinMode(echo2, INPUT);
 }
 
 void loop() {
 
-  digitalWrite(trigger, LOW);
+  digitalWrite(trigger1, LOW);
   delay(5);
-  digitalWrite(trigger, HIGH);
+  digitalWrite(trigger1, HIGH);
   delay(10);
-  digitalWrite(trigger, LOW);
-  dauer = pulseIn(echo, HIGH);
-  entfernung = (dauer / 2) * 0.03432;
+  digitalWrite(trigger1, LOW);
+  dauer1 = pulseIn(echo1, HIGH);
+  entfernung1 = (dauer1 / 2) * 0.03432;
+
+  digitalWrite(trigger2, LOW);
+  delay(5);
+  digitalWrite(trigger2, HIGH);
+  delay(10);
+  digitalWrite(trigger2, LOW);
+  dauer1 = pulseIn(echo2, HIGH);
+  entfernung2 = (dauer2 / 2) * 0.03432;
 
   DynamicJsonBuffer jsonBuffer; //----- PROBLEM LINE -----//
   JsonObject& root = jsonBuffer.createObject();
@@ -40,17 +52,19 @@ void loop() {
   int carID = 1;
   int occupied = 0;
 
-  if (entfernung <= 100) {
+  if (entfernung1 <= 100) {
     occupied = 1;
     root["carID"] = carID;
     root["occupied"] = occupied;
-    root.printTo(Serial);
+    //root.printTo(Serial);
+    root.prettyPrintTo(Serial);
     Serial.println();
   } else {
     occupied = 0;
     root["carID"] = carID;
     root["occupied"] = occupied;
-    root.printTo(Serial);
+    //root.printTo(Serial);
+    root.prettyPrintTo(Serial);
     Serial.println();
   }
 
