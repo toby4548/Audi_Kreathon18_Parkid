@@ -31,6 +31,7 @@ parkSchema.methods.show = function () {
 // å»ºç«‹æ¨¡åž‹
 var PARK = mongoose.model('pid1', parkSchema);
 
+/*
 PARK.find({'carID':'1A 2B 3C 4D'}, function (err, docs) {
   if ( err || !docs) {
     console.log("æ‰¾ä¸åˆ°dht11çš„è³‡æ–™ï¼");
@@ -41,5 +42,17 @@ PARK.find({'carID':'1A 2B 3C 4D'}, function (err, docs) {
     });
   }
 });
+*/
+var place;
+PARK.find({'carID':'1A 2B 3C 4D'}).exec(function(err,data){
+  if (err) console.log("Error");
+  place = data['parkingplace'];
+  console.log( data);
+});
 
+PARK.find({'carID':'1A 2B 3C 4D'}).exec(function(err,data){
+  if (err) console.log("Error");
+  place = data['function'];
+  console.log(data);
+});
 
