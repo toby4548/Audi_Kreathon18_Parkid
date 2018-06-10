@@ -171,6 +171,8 @@ serverIO.on("connection", function(socket) {
           instruction.push(
             "Your carID is: " + carID + "\nAssigining parkingspace..."
           );
+          
+          var assign = [];
           /* Get carID information from database */
           var PARK = mongoose.model("pid1", parkSchema);
           PARK.find({ carID: carID }, function(err, docs) {
@@ -182,30 +184,31 @@ serverIO.on("connection", function(socket) {
                 var data = new PARK(d);
                 db_carID = data["carID"];
                 db_function = data["function"];
-                //data.show();
+                data.show();
 
                 /* get assign */
-                var assign = get_assign(carID, db_function, occupied, check);
-                if (assign.length > 0) {
-                  mem = assign;
-                  //console.log("Please park on parkplace No." + String(assign));
-                  instruction.push(
-                    "Please park at parkplace No." + String(assign)
-                  );
-                  /* Wait for check change to 1 from Arduino */
-                  //break;
-                } else {
-                  //console.log("There is no parkingspace available.");
-                  instruction.push("There is no parkingspace available.");
-                  ////////////Todo: set the check_car back to 0////////////////
-                  //break;
-                }
+                assign = get_assign(carID, db_function, occupied, check);
+
               });
             }
           });
+          if (assign.length > 0) {
+            mem = assign;
+            //console.log("Please park on parkplace No." + String(assign));
+            instruction.push(
+              "Please park at parkplace No." + String(assign)
+            );
+            /* Wait for check change to 1 from Arduino */
+            break;
+          } else {
+            //console.log("There is no parkingspace available.");
+            instruction.push("There is no parkingspace available.");
+            ////////////Todo: set the check_car back to 0////////////////
+            break;
+          }
+        
         }
 
-        console.log("Got data from DB!");
 
       case 2: // state 2
         //console.log("Finish parking... \n Checking validity...");
@@ -257,7 +260,7 @@ function get_assign(carID, db_carID, occupied, check) {
   /* find all parkspace with the function */
   var functional_space = function_to_parkspace[db_carID];
   assign = functional_space;
-  console.log(assign);
+  //console.log(assign);
 
   assign = check_availability(
     carID,
@@ -270,8 +273,8 @@ function get_assign(carID, db_carID, occupied, check) {
 }
 
 function check_availability(carID, assign, occupied, parkspace_to_grid, check) {
-  console.log(check);
-  console.log(assign);
+  //console.log(check);
+  //console.log(assign);
   var copy_assign = assign.slice(0);
   for (let i = 0; i < copy_assign.length; i++) {
     let assign_on_grid = parkspace_to_grid[String(copy_assign[i])];
@@ -287,7 +290,7 @@ function check_availability(carID, assign, occupied, parkspace_to_grid, check) {
           { $set: { parkingspace: parked_place } },
           function(err, doc) {
             if (err) console.log("Database Error! Can't update parkspace");
-            console.log(doc);
+            //console.log(doc);
           }
         );
       }
