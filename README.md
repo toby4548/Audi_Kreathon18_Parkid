@@ -4,6 +4,11 @@ The source code for team Parkid at Audi Kreathon 2018
 
 ![parkid](img/parkid.PNG)
 
+## Dependencies:
+
+npm: express, socket.io, johnny-fave, serialport
+Arduino: arduinojson
+
 ## Demo v1 - 1 parkspace detected with Johnny-five:
 
 Arduino: standart Firmata
@@ -33,3 +38,7 @@ Format:
   "check_car": 0
 }
 ```
+
+## Demo v5 - workflow with interface
+
+Arduino: park_test_serial
