@@ -1,107 +1,22 @@
 db.park.insert([
     {
-        "parkspace":1,
-        "sensor_ID":0,
-        "car_ID":0,
-	"occupied": 0,
-	"function" : 2
+        'carID':0,
+        'function':5,
+        'parkingspace':1
     },
     {
-        "parkspace":2,
-        "sensor_ID":1,
-        "car_ID":0,
-	"occupied": 0,
-	"function" : 3
+        'carID':1,
+        'function':0,
+        'parkingspace':1
     },
     {
-        "parkspace":3,
-        "sensor_ID":2,
-        "car_ID":0,
-	"occupied": 0,
-	"function" : 1
+        'carID':3,
+        'function':3,
+        'parkingspace':1
     },
     {
-        "parkspace":4,
-        "sensor_ID":3,
-        "car_ID":0,
-	"occupied": 0,
-	"function" : 2
-    },
-    {
-        "parkspace":5,
-        "sensor_ID":4,
-        "car_ID":0,
-	"occupied": 0,
-	"function" : 4
-    },
-    {
-        "parkspace":6,
-        "sensor_ID":5,
-        "car_ID":0,
-	"occupied": 0,
-	"function" : 5
-    },
-    {
-        "parkspace":7,
-        "sensor_ID":6,
-        "car_ID":0,
-	"occupied": 0,
-	"function" : 0
-    },
-    {
-        "parkspace":8,
-        "sensor_ID":7,
-        "car_ID":0,
-	"occupied": 0,
-	"function" : 2
-    },
-    {
-        "parkspace":9,
-        "sensor_ID":8,
-        "car_ID":0,
-	"occupied": 0,
-	"function" : 3
-    },
-    {
-        "parkspace":10,
-        "sensor_ID":9,
-        "car_ID":0,
-	"occupied": 0,
-	"function" : 1
-    },
-    {
-        "parkspace":11,
-        "sensor_ID":10,
-        "car_ID":0,
-	"occupied": 0,
-	"function" : 4
-    },
-    {
-        "parkspace":12,
-        "sensor_ID":11,
-        "car_ID":0,
-	"occupied": 0,
-	"function" : 3
-    },
-    {
-        "parkspace":13,
-        "sensor_ID":12,
-        "car_ID":0,
-	"occupied": 0,
-	"function" : 1
-    },
-    {
-        "parkspace":14,
-        "sensor_ID":13,
-        "car_ID":0,
-	"occupied": 0,
-	"function" : 0
-    },
-    {
-        "parkspace":15,
-        "sensor_ID":14,
-        "car_ID":0,
-	"occupied": 0,
-	"function" : 5
+        'carID':2,
+        'function':5,
+        'parkingspace':15
     }
 ]);

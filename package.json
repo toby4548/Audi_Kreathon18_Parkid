@@ -19,6 +19,7 @@
   "dependencies": {
     "express": "^4.16.3",
     "johnny-five": "^0.15.0",
+    "mongoose": "^5.1.4",
     "serialport": "^4.0.7",
     "socket.io": "^2.1.1"
   }

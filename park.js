@@ -42,6 +42,44 @@ const parkspace_to_grid = {
   15: 3
 };
 
+const parkspace_to_function = {
+  /*
+  function -1: No function
+  function 0: Hebebuehne(Raedern) 
+  function 1: Hebebuehne(Raedern)+Spureinstellung
+  function 2: Hebebuehne(Karosse)
+  function 3: Verdeckwechsel
+  function 4: Hebebuehne(Absauganlage+Motorpruefung)
+  function 5: Elektropruefungen
+  */ 
+
+  1:[0],
+  2:[0],
+  3:[2],
+  4:[3],
+  5:[0],
+  6:[1],
+  7:[0],
+  8:[0],
+  9:[0],
+  10:[5],
+  11:[2],
+  12:[2],
+  13:[0],
+  14:[4],
+  15:[1]
+};
+
+const function_to_parkspace = {
+  0:[1,2,5,7,8,9,13],
+  1:[6],
+  2:[15],
+  3:[3,11,12],
+  4:[4],
+  5:[14],
+  6:[10]
+}
+
 const grid_to_parkspace = swap(parkspace_to_grid);
 
 /* Open serial port ****Remember to do this before open socketio***** */
