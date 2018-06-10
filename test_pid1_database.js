@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://192.168.2.117');
+mongoose.connect('mongodb://192.168.2.117/kreathon');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -10,9 +10,9 @@ db.once('open', function() {
 
 
 var parkSchema = new mongoose.Schema({
-    'carID': String,
-    'function': Number,
-    'parkingspace':Number
+    "carID": String,
+    "function_required": Number,
+    "parkingspace":Number
 });
 
 console.log("test");
@@ -22,14 +22,14 @@ console.log("test");
 parkSchema.methods.show = function () {
   console.log("Test");
   var msg = "carID" + this['carID'] +
-	      ", function_required" + this['function'] + 
+	      ", function_required" + this['function_required'] + 
           ", parkingspace" + this['parkingspace'];
 
   console.log(msg); 
 }
 
 // å»ºç«‹æ¨¡åž‹
-var PARK = mongoose.model('test_park', parkSchema);
+var PARK = mongoose.model('PID_server', parkSchema);
 
 /*
 PARK.find({'carID':'1A 2B 3C 4D'}, function (err, docs) {
@@ -47,10 +47,10 @@ var place;
 PARK.find({'carID':'1A 2B 3C 4D'}).exec(function(err,data){
   if (err) console.log("Error");
   place = data['parkingplace'];
-  console.log( data);
+  console.log(data);
 });
 
-PARK.find({'carID':'1A 2B 3C 4D'}).exec(function(err,data){
+PARK.find({"carID":"1A 2B 3C 4D"}).exec(function(err,data){
   if (err) console.log("Error");
   place = data['function'];
   console.log(data);
