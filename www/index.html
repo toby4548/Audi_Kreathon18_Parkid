@@ -342,8 +342,11 @@
       var occupied = data["occupied"];
       var ins = data["instruction"];
       var show_instruction = "";
+      var assign = data["assign"];
 
-      draw_occupied(occupied);
+
+
+      draw_occupied(occupied, assign);
 
       for (let i = 0; i < ins.length; i++) {
         show_instruction += (ins[i] + "\n");
@@ -352,10 +355,13 @@
       $("#i01").html(show_instruction);
     });
 
-    function draw_occupied(occupied) {
+    function draw_occupied(occupied, assign) {
       for (let i = 1; i < 65; i++) {
         if (occupied[i - 1] == 1) {
           $("#d" + i).css("background-color", "yellow");
+        }
+        else if (assign.indexOf(i - 1) > -1) {
+          $("#d" + i).css("background-color", "green");
         }
         else {
           $("#d" + i).css("background-color", "#e2e2e0");
