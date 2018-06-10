@@ -1,8 +1,10 @@
-# Audi Kreathon18 Parkid
+# Audi Kreathon18 - Team P.I.D.
+
+<img src="img/logo.png" width="10%">
 
 The source code for team Parkid at Audi Kreathon 2018
 
-![parkid](img/parkid.PNG)
+![demo](img/parkid.PNG)
 
 ## Dependencies:
 
