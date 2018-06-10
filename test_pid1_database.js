@@ -10,9 +10,9 @@ db.once('open', function() {
 
 
 var parkSchema = new mongoose.Schema({
-    'carID': Number,
-    'function_required': Number,
-    'parkingspace':{ type: Date, default: Date.now }
+    'carID': String,
+    'function': Number,
+    'parkingspace':Number
 });
 
 console.log("test");
@@ -21,17 +21,17 @@ console.log("test");
 // å®šç¾©è‡ªè¨‚çš„show()æ–¹æ³•
 parkSchema.methods.show = function () {
   console.log("Test");
-  var msg = "carID" + this['carid'] +
+  var msg = "carID" + this['carID'] +
 	      ", function_required" + this['function'] + 
-          ", parkingspace" + this['parkspace'];
+          ", parkingspace" + this['parkingspace'];
 
   console.log(msg); 
 }
 
 // å»ºç«‹æ¨¡åž‹
-var PARK = mongoose.model('park', parkSchema);
+var PARK = mongoose.model('pid1', parkSchema);
 
-PARK.find(function (err, docs) {
+PARK.find({'carID':'1A 2B 3C 4D'}, function (err, docs) {
   if ( err || !docs) {
     console.log("æ‰¾ä¸åˆ°dht11çš„è³‡æ–™ï¼");
   } else {
