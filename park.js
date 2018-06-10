@@ -147,7 +147,7 @@ serverIO.on("connection", function(socket) {
     var occupied = obj["occupied"]; //occupaied is an 1 by 64 matrix
     check = obj["check"];
     check_car = obj["check_car"];
-    console.log("check_car: "+String(check_car)+" check: "+String(check));
+    //console.log("check_car: " + String(check_car) + " check: " + String(check));
     /* Implement workflow with finite state machine*/
     var state;
     /* state 0: waiting, state 1: parking, state 2: validation */
@@ -214,9 +214,9 @@ serverIO.on("connection", function(socket) {
                 ////////////Todo: set the check_car back to 0////////////////
                 //break;
               }
-              
-              var assign_in_grid=[];
-              for (let i =0;i<assign.length;i++) {
+
+              var assign_in_grid = [];
+              for (let i = 0; i < assign.length; i++) {
                 assign_in_grid.push(parkspace_to_grid[assign[i]]);
               }
 
@@ -231,8 +231,9 @@ serverIO.on("connection", function(socket) {
         }
 
       case 2: // state 2
-        console.log("Finish parking... \n Checking validity...");
+        //console.log("Finish parking... \n Checking validity...");
         instruction.push("Finish parking... \n Checking validity...");
+        assign = [];
         var valid = false;
         //console.log(mem);
         var after_parking = check_availability(
@@ -264,7 +265,8 @@ serverIO.on("connection", function(socket) {
     /////////////Todo: emit UI to browser ////////////////
     serverIO.sockets.emit("park", {
       occupied: occupied,
-      instruction: instruction
+      instruction: instruction,
+      assign: assign
     });
   });
 });

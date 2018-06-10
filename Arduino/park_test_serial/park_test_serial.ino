@@ -86,7 +86,7 @@ void loop() {
   //root.prettyPrintTo(Serial);
   Serial.println();
 
-  delay(5000);
+  delay(15000);
 
   root["check"] = 1;
   
