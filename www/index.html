@@ -9,34 +9,22 @@
       text-align: center;
     }
 
-    #matrixTB {
-      cursor: pointer;
-      width: 200px;
-      height: 200px;
-      border-collapse: separate;
-      border-width: 0;
-      border-spacing: 0;
+    body {
+      background-image: url(/img/audi_r8.png);
+      background-repeat: no-repeat;
+      background-size: 100% 165%;
+
     }
 
-    #matrixTB td {
-      padding: 0;
-      height: 10px;
-      width: 15px;
-      background-color: #e2e2e0;
-      border: 1px solid #cccccc;
-      text-align: center;
+    h2 {
+      font: normal normal normal 32px/1 Helvetica, arial, sans-serif;
+      border-bottom: 2px solid #fff;
+      background: #fff;
+      color: #000;
+
+      display: inline-block;
+
     }
-
-    #matrixTB tr {
-      padding: 0;
-      height: 10px;
-      width: 15px;
-      background-color: #e2e2e0;
-      border: 1px solid #cccccc;
-      text-align: center;
-    }
-
-
 
     .active {
       background-color: #F11444;
@@ -63,22 +51,35 @@
       background: #fff;
     }
 
-    body {
-      background-image: url(/img/audi_r8.png);
-      background-repeat: no-repeat;
-      background-size: 100% 165%;
-
+    #matrixTB {
+      cursor: pointer;
+      width: 200px;
+      height: 200px;
+      border-collapse: separate;
+      border-width: 0;
+      border-spacing: 0;
     }
 
-    h2 {
-      font: normal normal normal 32px/1 Helvetica, arial, sans-serif;
-      border-bottom: 2px solid #fff;
-      background: #fff;
-      color: #000;
-
-      display: inline-block;
-
+    #matrixTB td {
+      padding: 0;
+      height: 10px;
+      width: 15px;
+      background-color: #e2e2e0;
+      border: 1px solid #e2e2e0;
+      /*#cccccc;*/
+      text-align: center;
     }
+
+    #matrixTB tr {
+      padding: 0;
+      height: 10px;
+      width: 15px;
+      background-color: #e2e2e0;
+      border: 1px solid #e2e2e0;
+      /*#cccccc;*/
+      text-align: center;
+    }
+
 
     #d1 {
       border: 1px solid blue !important;
@@ -271,7 +272,7 @@
       <!--
       <img src="/img/audi.jpg" alt="Audi" align="top" height="80" width="200">
       -->
-      <p id="i01">Welcome to AAZ!</p>
+      <p id="i01">Loading...</p>
     </div>
   </div>
 
@@ -331,62 +332,37 @@
 
     $("#resetBtn").click(function () {
       var index = 0;
-
-      for (var i = 1; i < 65; i++) {
-        var temp;
-        if (Object.values(parkspace_to_grid).includes(i - 1)) {
-          temp = Object.keys(parkspace_to_grid).find(key => parkspace_to_grid[key] === (i - 1));
-          $("#d" + i).html(String(temp));
-          $("#d" + i).css("background-color", "#e2e2e0");
-        }
-        else {
-
-          $("#d" + i).html('&nbsp;');
-          $("#d" + i).css("background-color", "#e2e2e0");
-        }
-      }
-
+      reset()
       m_array = [0, 0, 0, 0, 0, 0, 0, 0];
       //send2Server();
     });
 
     socket.on('park', function (data) {
-      var value = data["occupied"][56];
+      reset()
+      var occupied = data["occupied"];
       var ins = data["instruction"];
       var show_instruction = "";
-      //console.log(value);
-      //$("#d57").html
-      for (var i = 1; i < 65; i++) {
-        var temp;
-        if ((i - 1) in grid_to_parkspace) {
-          $("#d" + i).html(String(grid_to_parkspace[i - 1]));
-          $("#d" + i).css("background-color", "#e2e2e0");
-        }
-        else {
-          $("#d" + i).html('&nbsp;');
-          $("#d" + i).css("background-color", "#e2e2e0");
-        }
-      }
 
-
-      if (value == 1) {
-        $("#d57").css("background-color", "yellow");
-        $("#d57").html("1");
-      }
-      else {
-        $("#d57").css("background-color", "#e2e2e0");
-        $("#d57").html("0");
-      }
+      draw_occupied(occupied);
 
       for (let i = 0; i < ins.length; i++) {
         show_instruction += (ins[i] + "\n");
       }
-
       show_instruction = show_instruction.replace(/\n/g, "<br />");
-
       $("#i01").html(show_instruction);
-
     });
+
+    function draw_occupied(occupied) {
+      for (let i = 1; i < 65; i++) {
+        if (occupied[i - 1] == 1) {
+          $("#d" + i).css("background-color", "yellow");
+        }
+        else {
+          $("#d" + i).css("background-color", "#e2e2e0");
+        }
+      }
+    }
+
 
     function toggleDot(me) {
       if (me.html() == '0') {
@@ -405,6 +381,20 @@
         ret[json[key]] = key;
       }
       return ret;
+    }
+
+    function reset() {
+      for (var i = 1; i < 65; i++) {
+        var temp;
+        if ((i - 1) in grid_to_parkspace) {
+          $("#d" + i).html(String(grid_to_parkspace[i - 1]));
+          $("#d" + i).css("background-color", "#e2e2e0");
+        }
+        else {
+          $("#d" + i).html('&nbsp;');
+          $("#d" + i).css("background-color", "#e2e2e0");
+        }
+      }
     }
 
     function matrixVal() {

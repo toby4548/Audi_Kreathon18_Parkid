@@ -42,6 +42,8 @@ const parkspace_to_grid = {
   15: 3
 };
 
+const grid_to_parkspace = swap(parkspace_to_grid);
+
 /* Open serial port ****Remember to do this before open socketio***** */
 serialPort.on("open", function() {
   console.log("Serial Connected!");
@@ -86,13 +88,15 @@ serverIO.on("connection", function(socket) {
           ////////////Todo: set the check_car back to 0//////////
         } else {
           //console.log("Assigining parkingspace...");
-          instruction.push("Your carID is: " + carID +"\nAssigining parkingspace...");
+          instruction.push(
+            "Your carID is: " + carID + "\nAssigining parkingspace..."
+          );
           /* get assign */
           var assign = get_assign(carID, occupied);
           if (assign.length > 0) {
             mem = assign;
             //console.log("Please park on parkplace No." + String(assign));
-            instruction.push("Please park on parkplace No." + String(assign));
+            instruction.push("Please park at parkplace No." + String(assign));
             /* Wait for check change to 1 from Arduino */
             break;
           } else {
@@ -161,4 +165,12 @@ function check_availability(assign, occupied, parkspace_to_grid) {
     if (occupied[String(assign_on_grid)] == 1) copy_assign.splice(i, 1);
   }
   return copy_assign;
+}
+
+function swap(json) {
+  var ret = {};
+  for (var key in json) {
+    ret[json[key]] = key;
+  }
+  return ret;
 }
