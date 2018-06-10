@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/sensors');
+mongoose.connect('mongodb://192.168.2.117');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -29,7 +29,7 @@ parkSchema.methods.show = function () {
 }
 
 // å»ºç«‹æ¨¡åž‹
-var PARK = mongoose.model('pid1', parkSchema);
+var PARK = mongoose.model('test_park', parkSchema);
 
 /*
 PARK.find({'carID':'1A 2B 3C 4D'}, function (err, docs) {
