@@ -86,7 +86,7 @@ serverIO.on("connection", function(socket) {
           ////////////Todo: set the check_car back to 0//////////
         } else {
           //console.log("Assigining parkingspace...");
-          instruction.push("Assigining parkingspace...");
+          instruction.push("Your carID is: " + carID +"\nAssigining parkingspace...");
           /* get assign */
           var assign = get_assign(carID, occupied);
           if (assign.length > 0) {
