@@ -14,6 +14,11 @@ A cloud based parking system with web app, mobile app and database support. An u
 
 ![demo](img/parkid.PNG)
 
+## Acknowledgement
+
+This work would	not have been possible without the information from the book <超圖解物聯網IoT實作入門> by 趙英傑
+Part of the static website used the example code from the book.
+
 ## Dependencies:
 
 npm: express, socket.io, johnny-fave, serialport, mongoose
