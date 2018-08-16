@@ -12,8 +12,13 @@ The traditional regisration for a parking space take hours to complete due to th
 
 A cloud based parking system with web app, mobile app and database support. An user can register a parking space with a carID(an RFID tag available on every production car) and desired function. When the car reaches the parking lot. The carID will be read and parking space is assigned by the system based on the funtion and availability. The system have sensors on each parking space which will check which space the driver parked and if the driver parked on a correct space. The information will be saved. The system can also locate one car's location when any colleague wants to retreive it. This repo contains the prototype that we had designed and developed in 96 hours during the Kreathon.
 
-![demo](img/parkid.PNG)
+Web app:
 
+![Web_app_demo](img/parkid.PNG)
+
+Mobile app(not in this repo, developed with React Native):
+
+![Mobile_app_demo](img/ParkID_Mobile.png)
 ## Acknowledgement
 
 This work would	not have been possible without the information from the book <超圖解物聯網IoT實作入門> by 趙英傑
